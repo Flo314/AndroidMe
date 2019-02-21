@@ -17,6 +17,14 @@
         android:paddingRight="16dp"
         android:paddingTop="16dp">
 
+        <!-- Container pour le fragment -->
+        <FrameLayout
+            android:id="@+id/head_container"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="centerInside"/>
+
+
     </LinearLayout>
 
 </ScrollView>
