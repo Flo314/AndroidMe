@@ -1,6 +1,7 @@
 package com.example.android.androidme;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,9 +11,14 @@ import android.widget.ImageView;
 
 import com.example.android.androidme.data.AndroidImageAssets;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BodyPartFragment extends Fragment {
+
+    // sauvegarde de l'état du fragment
+    public static final String IMAGE_ID_LIST = "image_ids";
+    public static final String LIST_INDEX = "list_index";
 
     // étiquette pour la journalisation
     private static final String TAG = "BodyPartFragment";
@@ -70,5 +76,12 @@ public class BodyPartFragment extends Fragment {
 
     public void setmListIndex(int index) {
         mListIndex = index;
+    }
+
+    // sauvegarder l'état du fragment : si changement orientation écran
+    @Override
+    public void onSaveInstanceState(Bundle currentState) {
+        currentState.putIntegerArrayList(IMAGE_ID_LIST, (ArrayList<Integer>) mImageIds);
+        currentState.putInt(LIST_INDEX, mListIndex);
     }
 }
