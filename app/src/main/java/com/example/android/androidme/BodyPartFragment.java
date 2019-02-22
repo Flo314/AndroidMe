@@ -33,11 +33,28 @@ public class BodyPartFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_body_part, container, false);
 
         // obtenir une référence à la vue de l'image
-        ImageView imageView = (ImageView) rootView.findViewById(R.id.body_part_image_view);
+        final ImageView imageView = (ImageView) rootView.findViewById(R.id.body_part_image_view);
 
         //Si l'id d'une image exist ? définir la ressource image sur le bon élément de cette liste
         if(mImageIds != null){
             imageView.setImageResource((mImageIds.get(mListIndex)));
+
+            // ajout d'un écouteur de clic
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                // incrémentation de la liste : mListIndex
+                    if(mListIndex < mImageIds.size()-1){
+                        mListIndex++;
+                    } else {
+                        // si l'index de la liste arrive à la fin on réinitialise l'index à 0 pour repartir au début
+                        mListIndex = 0;
+                    }
+                    // mise à jour de la ressource image à l'image suivante
+                    imageView.setImageResource(mImageIds.get(mListIndex));
+                }
+            });
+
         }else{
             Log.v(TAG, "La liste d'identifiant d'image de ce fragment est nulle");
         }
