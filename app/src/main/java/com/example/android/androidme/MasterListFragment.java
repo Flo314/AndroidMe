@@ -8,6 +8,7 @@ import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.example.android.androidme.data.AndroidImageAssets;
@@ -58,6 +59,14 @@ public class MasterListFragment extends Fragment {
 
         //mettre l'adapteur dans le gridView
         gridView.setAdapter(mAdapter);
+
+        // déclencher le rappel sur un clic
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mCallbach.onImageSelected(position);
+            }
+        });
 
         // retourne la vue racine
         return rootView;
