@@ -15,8 +15,10 @@ public class MainActivity extends AppCompatActivity {
         BodyPartFragment headFragment = new BodyPartFragment();
 
         // utilise le FragmentManager pour ajouter le fragment à l'écran
+        // getSupportManager donne un gestionnaire de fragment qui utilise les API de la bibliothèque de support
         FragmentManager fragmentManager = getSupportFragmentManager();
         // Fragment transaction : ajoute le fragment dans le container
+        // beginTransaction démarre une nouvelle transaction
         fragmentManager.beginTransaction()
                 .add(R.id.head_container, headFragment)
                 .commit();
