@@ -6,4 +6,5 @@
     android:id="@+id/master_list_fragment"
     android:name="com.example.android.androidme.MasterListFragment">
 
+
 </fragment>
