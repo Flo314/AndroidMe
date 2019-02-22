@@ -35,6 +35,13 @@ public class BodyPartFragment extends Fragment {
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        // si on détecte un état sauvegardé on change la valeur
+        if(savedInstanceState != null) {
+            mImageIds = savedInstanceState.getIntegerArrayList(IMAGE_ID_LIST);
+            mListIndex = savedInstanceState.getInt(LIST_INDEX);
+        }
+
         // gonfler le fragment
         View rootView = inflater.inflate(R.layout.fragment_body_part, container, false);
 
