@@ -4,6 +4,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.android.androidme.data.AndroidImageAssets;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -11,8 +13,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // créer une instance de BodyPartFragment et l'affocher en utilisant le FragmentManager
+        // créer une instance de BodyPartFragment et l'afficher en utilisant le FragmentManager
         BodyPartFragment headFragment = new BodyPartFragment();
+
+        headFragment.setImageIds(AndroidImageAssets.getHeads());
+        headFragment.setmListIndex(1);
 
         // utilise le FragmentManager pour ajouter le fragment à l'écran
         // getSupportManager donne un gestionnaire de fragment qui utilise les API de la bibliothèque de support
@@ -21,6 +26,18 @@ public class MainActivity extends AppCompatActivity {
         // beginTransaction démarre une nouvelle transaction
         fragmentManager.beginTransaction()
                 .add(R.id.head_container, headFragment)
+                .commit();
+
+        BodyPartFragment bodyFragment = new BodyPartFragment();
+        bodyFragment.setImageIds(AndroidImageAssets.getBodies());
+        fragmentManager.beginTransaction()
+                .add(R.id.body_container, bodyFragment)
+                .commit();
+
+        BodyPartFragment legFragment = new BodyPartFragment();
+        legFragment.setImageIds(AndroidImageAssets.getLegs());
+        fragmentManager.beginTransaction()
+                .add(R.id.leg_container, legFragment)
                 .commit();
     }
 }
