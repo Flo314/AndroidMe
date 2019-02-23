@@ -2,12 +2,15 @@ package com.example.android.androidme;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import com.example.android.androidme.R;
+import com.example.android.androidme.data.AndroidImageAssets;
 
 public class MainActivity extends AppCompatActivity implements MasterListFragment.OnImageClickListener{
 
@@ -17,10 +20,57 @@ public class MainActivity extends AppCompatActivity implements MasterListFragmen
     private int bodyIndex;
     private int legIndex;
 
+    // distiction des écrans soit simple soit tablette
+    private boolean mTwoPane;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // détermine si il crée écran tel ou tablette
+        if(findViewById(R.id.android_me_linear_layout) != null){
+            mTwoPane = true;
+
+            // supprimer le bouton next
+            Button nextButton = (Button) findViewById(R.id.next_button);
+            nextButton.setVisibility(View.GONE);
+
+            // définir le nombre de colonne de vue de la grille
+            GridView gridView = (GridView) findViewById(R.id.image_grid_view);
+            gridView.setNumColumns(2);
+
+            // creation de nouveau fragment
+            if(savedInstanceState == null) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+
+                // head fragment
+                BodyPartFragment headFragment = new BodyPartFragment();
+                headFragment.setImageIds(AndroidImageAssets.getHeads());
+
+                fragmentManager.beginTransaction()
+                        .add(R.id.head_container, headFragment)
+                        .commit();
+
+                // body fragment
+                BodyPartFragment bodyFragment = new BodyPartFragment();
+                bodyFragment.setImageIds(AndroidImageAssets.getBodies());
+
+                fragmentManager.beginTransaction()
+                        .add(R.id.body_container, bodyFragment)
+                        .commit();
+
+                // leg fragment
+                BodyPartFragment legFragment = new BodyPartFragment();
+                legFragment.setImageIds(AndroidImageAssets.getLegs());
+
+                fragmentManager.beginTransaction()
+                        .add(R.id.leg_container, legFragment)
+                        .commit();
+            }
+        } else {
+            mTwoPane = false;
+        }
     }
 
     // établir un lien avec le gragment cliqué
