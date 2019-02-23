@@ -80,7 +80,7 @@ public class BodyPartFragment extends Fragment {
         mImageIds = imageIds;
     }
 
-    public void setmListIndex(int index) {
+    public void setListIndex(int index) {
         mListIndex = index;
     }
 
