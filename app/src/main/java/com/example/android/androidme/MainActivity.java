@@ -86,36 +86,71 @@ public class MainActivity extends AppCompatActivity implements MasterListFragmen
         // lisIndex sera toujours compris entre 0 et 11
         int listIndex = position - 12*bodyPartNumber;
 
-        // met à jour les variables d'index dans l'image sélectionné
-        switch (bodyPartNumber) {
-            case 0: headIndex = listIndex;
-            break;
-            case  1: bodyIndex = listIndex;
-            break;
-            case  2: legIndex = listIndex;
-            break;
-            default:break;
-        }
+        if(mTwoPane) {
 
-        // passer l'infos à l'activité hôte
-        // la grouper (paquet -> bundle)
-        Bundle b = new Bundle();
-        b.putInt("headIndex", headIndex);
-        b.putInt("bodyIndex", bodyIndex);
-        b.putInt("legIndex", legIndex);
-
-        // joindre à une nouvelle intention qui lance une nouvelle activité
-        final Intent intent = new Intent(this, AndroidMeActivity.class);
-        intent.putExtras(b);
-
-        // ajout d'un bouton suivant qui déplace de la liste principale à l'autre activité
-        Button nextButton = (Button) findViewById(R.id.next_button);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(intent);
+            BodyPartFragment newFragment = new BodyPartFragment();
+           // définir l'élément actuellement affiché pour le bon fragment de partie du corps
+            switch (bodyPartNumber) {
+                case 0:
+                    newFragment.setImageIds(AndroidImageAssets.getHeads());
+                    newFragment.setListIndex(listIndex);
+                    // remplacer l'ancien fragment par le nouveau au clic d'une image
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.head_container, newFragment)
+                            .commit();
+                    break;
+                case 1:
+                    newFragment.setImageIds(AndroidImageAssets.getBodies());
+                    newFragment.setListIndex(listIndex);
+                    // remplacer l'ancien fragment par le nouveau au clic d'une image
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.body_container, newFragment)
+                            .commit();
+                    break;
+                case 2:
+                    newFragment.setImageIds(AndroidImageAssets.getLegs());
+                    newFragment.setListIndex(listIndex);
+                    // remplacer l'ancien fragment par le nouveau au clic d'une image
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.leg_container, newFragment)
+                            .commit();
+                    break;
+                default:break;
             }
-        });
+        } else {
+
+            // met à jour les variables d'index dans l'image sélectionné
+            switch (bodyPartNumber) {
+                case 0: headIndex = listIndex;
+                    break;
+                case  1: bodyIndex = listIndex;
+                    break;
+                case  2: legIndex = listIndex;
+                    break;
+                default:break;
+            }
+
+            // passer l'infos à l'activité hôte
+            // la grouper (paquet -> bundle)
+            Bundle b = new Bundle();
+            b.putInt("headIndex", headIndex);
+            b.putInt("bodyIndex", bodyIndex);
+            b.putInt("legIndex", legIndex);
+
+            // joindre à une nouvelle intention qui lance une nouvelle activité
+            final Intent intent = new Intent(this, AndroidMeActivity.class);
+            intent.putExtras(b);
+
+            // ajout d'un bouton suivant qui déplace de la liste principale à l'autre activité
+            Button nextButton = (Button) findViewById(R.id.next_button);
+            nextButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(intent);
+                }
+            });
+
+        }
 
     }
 }
